@@ -1,0 +1,725 @@
+
+SOAL UJIAN PAI XI,_CBT (Nurmadia) .html
+100%
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT PAI - SMA/SMK</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .font-arabic { font-family: 'Amiri', serif; font-size: 1.5rem; line-height: 2.5rem; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .radio-custom:checked + label {
+            background-color: #eff6ff; border-color: #3b82f6;
+        }
+        .radio-custom:checked + label .bullet {
+            background-color: #3b82f6; border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased h-screen flex flex-col overflow-hidden">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white shadow-md flex-shrink-0 print:hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center font-bold text-xl">
+                    <svg class="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    CBT PAI
+                </div>
+                <div id="nav-user-info" class="hidden text-sm font-medium"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="flex-1 overflow-y-auto w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col relative">
+        
+        <!-- ================= LOGIN SCREEN ================= -->
+        <div id="screen-login" class="flex-1 flex items-center justify-center">
+            <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-100">
+                <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Masuk ke Aplikasi</h2>
+                
+                <div class="flex mb-6 bg-gray-100 p-1 rounded-lg">
+                    <button id="btn-tab-siswa" class="flex-1 py-2 text-sm font-semibold rounded-md bg-white shadow text-blue-600" onclick="switchTab('siswa')">Siswa</button>
+                    <button id="btn-tab-guru" class="flex-1 py-2 text-sm font-semibold rounded-md text-gray-500 hover:text-gray-700" onclick="switchTab('guru')">Guru</button>
+                </div>
+
+                <!-- Form Siswa -->
+                <div id="form-siswa" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                        <input type="text" id="login-nama" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan nama Anda">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kelas</label>
+                        <select id="login-kelas" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">-- Pilih Kelas --</option>
+                            <option value="XI APHP 1">XI APHP 1</option>
+                            <option value="XI APHP 2">XI APHP 2</option>
+                            <option value="XI APHP 3">XI APHP 3</option>
+                            <option value="XI APHP 4">XI APHP 4</option>
+                            <option value="XI ULW">XI ULW</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" id="login-pass-siswa" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Password siswa">
+                    </div>
+                    <button onclick="loginSiswa()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 mt-4">Mulai Ujian</button>
+                </div>
+
+                <!-- Form Guru -->
+                <div id="form-guru" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Password Guru</label>
+                        <input type="password" id="login-pass-guru" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan password guru">
+                    </div>
+                    <button onclick="loginGuru()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 mt-4">Masuk Dashboard</button>
+                </div>
+
+                <div id="login-error" class="mt-4 text-sm text-red-500 text-center hidden"></div>
+            </div>
+        </div>
+
+        <!-- ================= STUDENT EXAM SCREEN ================= -->
+        <div id="screen-exam" class="hidden flex-1 flex flex-col md:flex-row gap-6 h-full">
+            
+            <!-- Left: Question Area -->
+            <div class="flex-1 flex flex-col bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                    <span class="font-bold text-gray-700 text-lg">Soal No. <span id="q-number">1</span></span>
+                    <div class="flex items-center text-red-600 font-bold bg-red-50 px-3 py-1 rounded-full border border-red-200">
+                        <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span id="timer-display">90:00</span>
+                    </div>
+                </div>
+                
+                <div class="flex-1 overflow-y-auto p-6">
+                    <div id="q-text" class="text-base leading-relaxed text-gray-800 mb-6"></div>
+                    <div id="q-options" class="space-y-3">
+                        <!-- Options injected here -->
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+                    <button onclick="prevQuestion()" id="btn-prev" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 disabled:opacity-50 transition">Sebelumnya</button>
+                    <button onclick="nextQuestion()" id="btn-next" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Selanjutnya</button>
+                </div>
+            </div>
+
+            <!-- Right: Question Navigation Grid -->
+            <div id="nav-sidebar" class="w-full md:w-72 bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col h-fit md:h-full flex-shrink-0 transition-all duration-300">
+                <div class="p-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center cursor-pointer hover:bg-gray-100 transition-colors" onclick="toggleNav()">
+                    <h3 class="font-bold text-gray-700">Navigasi Soal</h3>
+                    <button id="btn-toggle-nav" class="text-gray-500 focus:outline-none">
+                        <svg class="w-5 h-5 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                    </button>
+                </div>
+                <div id="nav-content" class="flex flex-col flex-1 overflow-hidden transition-all duration-300">
+                    <div class="p-4 flex-1 overflow-y-auto">
+                        <div id="q-grid" class="grid grid-cols-5 gap-2">
+                            <!-- Grid buttons injected here -->
+                        </div>
+                        <div class="mt-6">
+                            <div class="flex items-center text-xs text-gray-500 mb-1"><div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div> Sudah dijawab</div>
+                            <div class="flex items-center text-xs text-gray-500 mb-1"><div class="w-3 h-3 rounded-full bg-gray-200 border border-gray-300 mr-2"></div> Belum dijawab</div>
+                            <div class="flex items-center text-xs text-gray-500"><div class="w-3 h-3 rounded-full bg-yellow-400 mr-2"></div> Ragu-ragu (WIP)</div>
+                        </div>
+                    </div>
+                    <div class="p-4 border-t border-gray-200 bg-gray-50">
+                        <button onclick="showSubmitModal()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-4 rounded-lg transition shadow-sm">Selesai Ujian</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= STUDENT RESULT SCREEN ================= -->
+        <div id="screen-result" class="hidden flex-1 flex flex-col items-center justify-center">
+            <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-lg text-center border border-gray-100">
+                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Ujian Selesai!</h2>
+                <p class="text-gray-600 mb-6">Terima kasih, jawaban Anda telah berhasil disimpan.</p>
+                <div class="bg-gray-50 p-4 rounded-lg mb-6 text-left">
+                    <p class="text-sm text-gray-500 mb-1">Nama: <strong id="res-nama" class="text-gray-800"></strong></p>
+                    <p class="text-sm text-gray-500 mb-1">Kelas: <strong id="res-kelas" class="text-gray-800"></strong></p>
+                    <div class="mt-4 pt-4 border-t border-gray-200 flex justify-between items-center">
+                        <span class="font-bold text-gray-700">Nilai Anda:</span>
+                        <span id="res-score" class="text-3xl font-black text-blue-600"></span>
+                    </div>
+                </div>
+                <button onclick="logout()" class="px-6 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 transition">Kembali ke Beranda</button>
+            </div>
+        </div>
+
+        <!-- ================= TEACHER DASHBOARD SCREEN ================= -->
+        <div id="screen-teacher" class="hidden flex-1 flex flex-col bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-5 border-b border-gray-200 bg-gray-50 flex justify-between items-center flex-wrap gap-4 print:hidden">
+                <h2 class="text-xl font-bold text-gray-800">Rekapitulasi Nilai Siswa</h2>
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition flex items-center shadow-sm">
+                        <!-- Ikon PDF Baru -->
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M8.267 14.68c-.184 0-.308.018-.372.036v1.178c.076.018.171.023.302.023.479 0 .774-.242.774-.651 0-.366-.254-.586-.704-.586zm3.487.012c-.2 0-.33.018-.407.036v2.61c.077.018.201.018.313.018.817.006 1.349-.444 1.349-1.396.006-.83-.479-1.268-1.255-1.268z"/><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM9.498 16.19c-.309.29-.765.42-1.296.42a2.23 2.23 0 0 1-.308-.018v1.426H6.75v-3.981c0-.13-.006-.272-.018-.403h1.084c.036.124.047.243.053.385a1.597 1.597 0 0 1 .894-.438c.675 0 1.25.438 1.25 1.25 0 .705-.285 1.072-.515 1.359zm4.62 1.474a2.02 2.02 0 0 1-1.385.492c-.22 0-.444-.024-.622-.048v-3.987c0-.124-.006-.266-.018-.402h1.096c.035.124.047.236.053.372a1.866 1.866 0 0 1 1.083-.42c1.077 0 1.894.752 1.894 2 0 1.226-.74 1.993-1.001 1.993zm3.763-2.126h-1.302v1.208h-1.12v-3.982c0-.124-.006-.266-.018-.402h2.57v1.072h-1.432v1.03h1.302v1.074zM13 9V3.5L18.5 9H13z"/></svg>
+                        Cetak PDF
+                    </button>
+                    <button onclick="exportCSV()" class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition flex items-center shadow-sm">
+                        <!-- Ikon Excel Baru -->
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM9.476 18H7.319l1.458-2.5L7.382 13h2.15l.896 1.63L11.3 13h2.09l-1.383 2.45L13.435 18h-2.09l-.956-1.742L9.476 18zM13 9V3.5L18.5 9H13z"/></svg>
+                        Download Excel
+                    </button>
+                    <button onclick="logout()" class="px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-300 transition">Keluar</button>
+                </div>
+            </div>
+            
+            <div class="flex-1 overflow-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50 sticky top-0">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Lengkap</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kelas</th>
+                            <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Benar</th>
+                            <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Salah</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nilai</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Waktu Selesai</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider print:hidden">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body" class="bg-white divide-y divide-gray-200">
+                        <!-- Rows injected here -->
+                    </tbody>
+                </table>
+                <div id="loading-data" class="text-center py-8 text-gray-500 hidden">Memuat data...</div>
+                <div id="empty-data" class="text-center py-8 text-gray-500 hidden">Belum ada siswa yang menyelesaikan ujian.</div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Custom Modal -->
+    <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden transition-opacity">
+        <div class="bg-white rounded-xl shadow-xl max-w-sm w-full p-6 transform transition-all">
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Konfirmasi</h3>
+            <p class="text-sm text-gray-600 mb-6">Apakah Anda yakin ingin mengumpulkan jawaban? Waktu masih tersisa. Anda tidak dapat mengubah jawaban setelah ini.</p>
+            <div class="flex justify-end gap-3">
+                <button onclick="closeModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg text-sm font-medium transition">Batal</button>
+                <button onclick="processSubmission()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition">Ya, Kumpulkan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Delete Modal -->
+    <div id="delete-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden transition-opacity">
+        <div class="bg-white rounded-xl shadow-xl max-w-sm w-full p-6 transform transition-all">
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Hapus Data</h3>
+            <p class="text-sm text-gray-600 mb-6">Apakah Anda yakin ingin menghapus data siswa ini secara permanen?</p>
+            <div class="flex justify-end gap-3">
+                <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg text-sm font-medium transition">Batal</button>
+                <button onclick="confirmDelete()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs & Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // Firebase Initialization
+        let app, auth, db;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        try {
+            if (typeof __firebase_config !== 'undefined') {
+                const firebaseConfig = JSON.parse(__firebase_config);
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+            }
+        } catch (e) { 
+            console.error("Firebase init failed", e); 
+        }
+
+        // Data Soal 1 - 30 sesuai soal PDF yang diberikan
+        const questionsData = [
+            { no: 1, text: `Perhatikan kutipan ayat Q.S. Ali Imran ayat 190 berikut ini!<br><div class="font-arabic my-4" dir="rtl">إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ ...</div>Lanjutan yang tepat untuk melengkapi ayat di atas adalah ....`, options: ["لَأَزِيدَنَّكُمْ ۖ وَلَئِن كَفَرْتُمْ", "لَآيَاتٍ لِّأُولِي الْأَلْبَابِ", "رَبَّنَا مَا خَلَقْتَ هَذَا بَاطِلًا", "سُبْحَانَكَ فَقِنَا عَذَابَ النَّارِ", "الَّذِينَ يَذْكُرُونَ اللَّهَ قِيَامًا"], answer: 1 },
+            { no: 2, text: `Berdasarkan Q.S. Ali Imran: 190, penciptaan langit dan bumi serta pergantian malam dan siang merupakan tanda-tanda kebesaran Allah SWT. Namun, tanda-tanda tersebut hanya dapat dipahami oleh "Ulul Albab". Karakteristik utama dari Ulul Albab jika dikaitkan dengan perkembangan sains modern adalah ....`, options: ["Orang yang selalu membaca Al-Qur'an setiap waktu tanpa memahami artinya", "Orang yang menghabiskan waktunya untuk beribadah mahdhah di masjid meninggalkan urusan dunia", "Orang yang mampu memadukan zikir kepada Allah dalam segala keadaan dan berpikir kritis terhadap ciptaan-Nya", "Orang yang hanya menggunakan akal rasionya untuk meneliti alam semesta tanpa mengaitkannya dengan Tuhan", "Orang yang menghafal banyak dalil untuk mendebat orang lain dalam forum diskusi"], answer: 2 },
+            { no: 3, text: `Perhatikan kutipan Q.S. Ibrahim ayat 7 berikut!<br><div class="font-arabic my-4" dir="rtl">وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ ...</div>Kalimat yang tepat untuk menyempurnakan ayat tentang syukur nikmat di atas adalah ....`, options: ["إِنَّ عَذَابِي لَشَدِيدٌ", "فَاذْكُرُونِي أَذْكُرْكُمْ", "لَآيَاتٍ لِّأُولِي الْأَلْبَابِ", "لَأَزِيدَنَّكُمْ ۖ وَلَئِن كَفَرْتُمْ", "وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ"], answer: 3 },
+            { no: 4, text: `Hukum bacaan (tajwid) pada lafal <span class="font-arabic mx-1">لَئِن شَكَرْتُمْ</span> dalam Q.S. Ibrahim ayat 7 adalah ....`, options: ["Idzhar halqi karena nun mati bertemu syin", "Ikhfa hakiki karena nun mati bertemu syin", "Idgham bighunnah karena nun mati bertemu syin", "Iqlab karena nun mati bertemu syin", "Idgham bilaghunnah karena nun mati bertemu syin"], answer: 1 },
+            { no: 5, text: `Allah menjanjikan akan menambah nikmat bagi hamba-Nya yang bersyukur. Bentuk implementasi rasa syukur (syukr bil arkan) tertinggi bagi seorang pelajar yang diberikan kecerdasan intelektual adalah ....`, options: ["Sering mengucapkan Alhamdulillah setiap kali mendapatkan nilai ujian yang bagus", "Membanggakan nilai raport kepada teman-teman untuk memotivasi mereka", "Menggunakan kecerdasannya untuk membantu menjelaskan pelajaran kepada teman yang kesulitan", "Menyimpan ilmunya sendiri agar tetap menjadi juara kelas tak terkalahkan", "Membuat status di media sosial tentang prestasinya sebagai bentuk rasa syukur"], answer: 2 },
+            { no: 6, text: `Di era media sosial, seringkali seseorang secara tidak sadar membagikan aib orang lain dengan dalih "hanya sekadar berbagi informasi" atau *gossip*. Berdasarkan ajaran Islam, ancaman bagi orang yang enggan menutupi aib saudaranya adalah ....`, options: ["Akan dijauhi oleh masyarakat sekitar dalam pergaulan sehari-hari", "Allah akan membuka aibnya di dunia dan di akhirat kelak", "Hartanya tidak akan membawa keberkahan di dunia", "Akan mendapatkan karma dari orang yang dibicarakan aibnya", "Gugurnya seluruh amal ibadah puasa dan zakat yang pernah dilakukan"], answer: 1 },
+            { no: 7, text: `Perhatikan studi kasus berikut! Aisyah mengetahui bahwa temannya, Fatimah, pernah melakukan kesalahan fatal di masa lalu yang sangat memalukan, namun Fatimah kini sudah bertobat dan berubah menjadi lebih baik. Suatu hari, ada orang yang bertanya tentang masa lalu Fatimah kepada Aisyah. Sikap yang paling tepat (HOTS) dilakukan Aisyah adalah ....`, options: ["Menceritakan secara jujur karena berbohong adalah dosa", "Mengatakan bahwa ia tidak tahu sama sekali agar aman dari dosa bohong", "Menutupi aib tersebut dan menceritakan kebaikan Fatimah yang sekarang", "Menceritakan masa lalu tersebut sebagai bentuk pelajaran agar orang lain tidak meniru", "Mengalihkan pembicaraan sambil memberikan isyarat bahwa Fatimah dulu tidak baik"], answer: 2 },
+            { no: 8, text: `Menjaga lisan tidak hanya dimaknai sebagai ucapan dari mulut, melainkan juga "lisan digital" atau ketikan jari di media sosial. Berikut ini yang merupakan contoh menjaga "lisan digital" yang paling tepat saat menerima pesan broadcast yang meragukan adalah ....`, options: ["Segera meneruskannya ke grup lain agar cepat tersebar jika ternyata benar", "Membaca dan membiarkannya saja tanpa mencari tahu kebenarannya", "Membalas dengan marah kepada pengirim pesan karena menyebar berita tidak jelas", "Melakukan tabayyun (konfirmasi kebenaran) sebelum menyimpulkan dan menyebarkan", "Menghapus aplikasi media sosial agar tidak terkena fitnah berita palsu"], answer: 3 },
+            { no: 9, text: `Dalam hadits riwayat Bukhari dan Muslim, Rasulullah SAW bersabda: "Barangsiapa beriman kepada Allah dan hari akhir, hendaklah ia...". Lanjutan yang paling tepat kaitannya dengan menjaga lisan adalah ....`, options: ["Berinfaq dari sebagian hartanya atau menahan diri", "Berkata yang baik atau diam", "Mendirikan shalat malam dan berpuasa", "Menyambung tali silaturahmi dengan kerabatnya", "Menjenguk tetangganya yang sedang sakit"], answer: 1 },
+            { no: 10, text: `Ada dua jenis aib, yaitu aib yang bersifat kodrati (cacat fisik) dan aib yang berupa kemaksiatan. Jika melihat seseorang memiliki kekurangan fisik, cara kita memelihara lisan dan menjaga kehormatannya adalah ....`, options: ["Memberikan julukan yang lucu agar ia merasa terhibur", "Tidak memperhatikannya sama sekali agar ia merasa diabaikan", "Bersikap wajar, menghormatinya, dan tidak menjadikan kekurangannya sebagai bahan candaan", "Sering menasihatinya agar bersabar menerima cobaan tersebut setiap kali bertemu", "Menggalang dana tanpa sepengetahuannya untuk biaya operasi perbaikan fisik"], answer: 2 },
+            { no: 11, text: `Sikap syukur nikmat memiliki korelasi yang kuat dengan kesehatan mental seseorang. Secara psikologis dan spiritual (HOTS), mengapa orang yang bersyukur cenderung terhindar dari sifat hasad (dengki)?`, options: ["Karena ia merasa hartanya sudah lebih banyak dari orang lain", "Karena ia sibuk menghitung nikmatnya sendiri dan ridha dengan ketetapan Allah baginya", "Karena ia takut nikmatnya akan dicabut jika memiliki sifat dengki", "Karena rasa dengki membutuhkan energi besar yang melelahkan fisik", "Karena ia tidak peduli sama sekali dengan kehidupan sosial orang lain"], answer: 1 },
+            { no: 12, text: `Perkelahian atau tawuran antar pelajar seringkali dipicu oleh hal-hal sepele, seperti saling ejek. Dalam pandangan sosiologi Islam, faktor internal utama penyebab mudahnya pelajar tersulut emosi untuk berkelahi adalah ....`, options: ["Lemahnya kontrol diri, krisis identitas, dan tipisnya keimanan", "Kurangnya tugas dari sekolah sehingga banyak waktu luang", "Banyaknya provokasi dari pihak aparat keamanan setempat", "Kurangnya sarana olahraga di sekolah untuk menyalurkan energi", "Pengaruh dari kurikulum pendidikan yang terlalu memberatkan"], answer: 0 },
+            { no: 13, text: `Perhatikan Q.S. Al-Hujurat ayat 10 yang menegaskan bahwa "Sesungguhnya orang-orang mukmin itu bersaudara". Ayat ini memberikan solusi konkret jika terjadi perselisihan atau perkelahian antar pelajar, yaitu ....`, options: ["Membiarkan aparat kepolisian menangkap semua yang terlibat", "Memanggil orang tua masing-masing untuk saling menggugat ganti rugi", "Mendamaikan kedua belah pihak (ishlah) dan bertakwa kepada Allah", "Mengeluarkan siswa yang terlibat tawuran secara sepihak dari sekolah", "Memviralkan kejadian tersebut agar menjadi sanksi sosial yang berat"], answer: 2 },
+            { no: 14, text: `Kasus HOTS: Budi membaca sebuah postingan di grup media sosial yang menghina nama sekolahnya. Banyak temannya yang terprovokasi dan merencanakan penyerangan ke sekolah pelaku pada sepulang sekolah. Sebagai pelajar muslim yang memegang prinsip Ukhuwah, tindakan terbaik yang harus dilakukan Budi adalah ....`, options: ["Ikut serta melakukan penyerangan sebagai bentuk solidaritas kepada sekolah", "Memilih diam, tidak ikut campur, dan segera pulang sendirian agar selamat", "Menasihati teman-temannya agar tidak terprovokasi dan melaporkan provokasi tersebut kepada guru/pihak berwenang", "Membalas postingan tersebut dengan hinaan yang lebih parah agar sekolah pelaku merasa takut", "Menantang pelaku utama berduel satu lawan satu agar teman-teman yang lain tidak menjadi korban"], answer: 2 },
+            { no: 15, text: `Salah satu dampak paling merugikan dari perkelahian antar pelajar secara spiritual adalah rusaknya Ukhuwah Islamiyah dan potensi hilangnya nyawa. Rasulullah SAW melarang keras umatnya saling membunuh, bahkan menyebutkan bahwa jika dua orang muslim berhadapan dengan pedang, maka ....`, options: ["Yang membunuh akan masuk neraka, sedangkan yang terbunuh diampuni", "Keduanya mendapatkan dosa, namun yang memulai dosanya lebih besar", "Yang membunuh dan yang terbunuh keduanya sama-sama masuk neraka", "Yang terbunuh otomatis mati syahid karena mempertahankan diri", "Hukuman diserahkan sepenuhnya kepada hukum positif negara masing-masing"], answer: 2 },
+            { no: 16, text: `Dalam upaya mencegah perkelahian antar pelajar, OSIS SMA "Bina Insani" merencanakan program kerja. Program preventif (pencegahan) yang paling efektif berbasis penguatan nilai-nilai keislaman adalah ....`, options: ["Memasang kamera CCTV di seluruh sudut sekolah dan jalanan sekitarnya", "Mengadakan razia barang bawaan siswa setiap hari secara mendadak", "Mengadakan kegiatan ekstrakurikuler lintas sekolah seperti bakti sosial dan kajian gabungan", "Memberikan sanksi denda uang dalam jumlah besar bagi yang ketahuan berkelahi", "Menyewa jasa tenaga keamanan tambahan untuk mengawal kepulangan siswa"], answer: 2 },
+            { no: 17, text: `Sifat *ta'ashshub* (fanatisme buta) terhadap kelompok atau almamater sering menjadi akar perkelahian pelajar. Islam melarang sikap ini karena ....`, options: ["Membuat seseorang menjadi kurang fokus dalam meraih prestasi akademik", "Mengaburkan standar kebenaran; menganggap kelompoknya selalu benar meski melakukan kezaliman", "Menyebabkan pemborosan karena sering membuat seragam/atribut kelompok", "Menurunkan reputasi sekolah di mata masyarakat umum dan pemerintah", "Membatasi ruang gerak pelajar dalam berinteraksi di media sosial"], answer: 1 },
+            { no: 18, text: `Menebarkan Islam yang *Rahmatan Lil 'Alamin* dapat dilakukan melalui dakwah. Berdasarkan Q.S. An-Nahl ayat 125, Allah SWT memerintahkan untuk menyeru manusia ke jalan-Nya dengan metode *hikmah*, *mau'idzatil hasanah*, dan ....`, options: ["*Mujadalah bil-lati hiya ahsan* (berdebat/berdiskusi dengan cara yang terbaik)", "*Taqarruf ilallah* (mendekatkan diri kepada Allah dengan ibadah sunnah)", "*Amar ma'ruf nahi munkar* secara tegas dan tanpa kompromi", "*Jihad fi sabilillah* (berjuang di jalan Allah dengan kekuatan fisik)", "*Ukhuwah wathaniyah* (menjaga persaudaraan sebangsa dan setanah air)"], answer: 0 },
+            { no: 19, text: `Khutbah, Tabligh, dan Dakwah memiliki tujuan yang sama, yaitu menyeru kepada kebaikan. Namun ketiganya memiliki syarat dan ketentuan yang berbeda. Perbedaan paling mendasar antara Khutbah Jumat dan Tabligh adalah ....`, options: ["Khutbah Jumat bebas waktunya, sedangkan tabligh terikat oleh waktu shalat", "Khutbah Jumat tidak memiliki rukun khusus, tabligh memiliki rukun yang kaku", "Khutbah Jumat terikat oleh syarat dan rukun tertentu (seperti suci dari hadas, dua kali khutbah), sedangkan tabligh lebih fleksibel", "Khutbah Jumat ditujukan untuk semua gender, tabligh hanya untuk laki-laki", "Khutbah Jumat boleh menggunakan bahasa apa saja pada rukunnya, tabligh harus berbahasa Arab"], answer: 2 },
+            { no: 20, text: `Seorang khatib sedang menyampaikan Khutbah Jumat. Di tengah khutbah kedua, tanpa sengaja ia buang angin (batal wudhunya). Tindakan yang paling tepat dan sesuai fiqih Islam yang harus dilakukan khatib adalah ....`, options: ["Meneruskan khutbah sampai selesai agar jamaah tidak menjadi kacau, lalu wudhu sebelum shalat", "Segera turun dari mimbar, berwudhu kembali, lalu melanjutkan khutbahnya atau digantikan orang lain", "Mempercepat khutbahnya tanpa membaca doa penutup dan langsung turun memimpin shalat", "Membatalkan seluruh ibadah Jumat hari itu dan menggantinya dengan shalat Dzuhur", "Memberitahu jamaah untuk langsung berdiri melaksanakan shalat Jumat tanpa menyelesaikan khutbah"], answer: 1 },
+            { no: 21, text: `Kasus HOTS: Ahmad adalah seorang mahasiswa yang berdakwah di lingkungan remaja yang gemar berbuat onar dan minim pendidikan agama. Metode dakwah *bil hal* (dengan perbuatan) yang paling efektif diterapkan Ahmad untuk kelompok sasaran ini adalah ....`, options: ["Memberikan ceramah setiap hari tentang neraka dan azab agar mereka takut", "Membagikan selebaran berisi dalil-dalil haramnya berbuat onar", "Menjauhi mereka dan berdoa dari jauh agar mereka diberikan hidayah", "Mendekati secara personal, mengajak berkegiatan positif (misal: olahraga bersama), dan memberi teladan akhlak yang baik", "Melaporkan mereka ke pihak berwajib agar mendapat efek jera yang instan"], answer: 3 },
+            { no: 22, text: `Salah satu rukun khutbah Jumat adalah membaca shalawat kepada Nabi Muhammad SAW. Jika seorang khatib lupa membaca shalawat pada kedua khutbahnya, maka hukum khutbah Jumat tersebut adalah ....`, options: ["Tetap sah karena shalawat hanyalah sunnah muakkad dalam khutbah", "Sah, namun khatib berdosa karena meninggalkan anjuran berkhutbah", "Tidak sah, karena membaca shalawat termasuk rukun khutbah yang harus dipenuhi", "Tergantung pada kesepakatan jamaah shalat Jumat yang hadir", "Sah, asalkan khatib menggantinya dengan membaca shalawat setelah selesai shalat"], answer: 2 },
+            { no: 23, text: `Tabligh secara bahasa berarti "menyampaikan". Dalam konteks kekinian, tabligh dapat dilakukan melalui berbagai media. Etika paling utama yang harus dipegang seorang *mubaligh* saat menyampaikan tabligh di media sosial agar sesuai nilai Islam yang santun adalah ....`, options: ["Menggunakan judul yang provokatif (clickbait) agar banyak yang menonton", "Menyampaikan materi dengan merendahkan penceramah lain yang berbeda pandangan", "Fokus pada penyampaian kebenaran (haq), bahasa yang santun, dan menghindari hoaks serta ujaran kebencian", "Membuka aib tokoh masyarakat agar umat tidak salah memilih pemimpin", "Menyisipkan banyak musik dan hiburan agar materi agama terlihat lebih modern dan bebas nilai"], answer: 2 },
+            { no: 24, text: `Dakwah yang dilakukan Wali Songo di Nusantara sukses besar karena menggunakan metode akulturasi budaya. Mereka tidak menghancurkan tradisi lokal, melainkan mengisinya dengan nilai-nilai tauhid. Ini merupakan manifestasi dari metode dakwah ....`, options: ["*Mau'idzah Hasanah* (Nasihat yang baik)", "*Mujadalah* (Bantahan yang argumentatif)", "*Dakwah bil Qolam* (Dakwah melalui tulisan)", "*Dakwah bil Hikmah* (Kebijaksanaan)", "*Dakwah bil Mal* (Dakwah dengan harta)"], answer: 3 },
+            { no: 25, text: `Dakwah bukanlah ajang untuk mencari musuh, melainkan mencari saudara. Oleh karena itu, prinsip utama yang harus dikedepankan oleh seorang *Da'i* saat menghadapi penolakan keras dari masyarakat sasarannya adalah ....`, options: ["Membalas dengan kemarahan karena mereka menolak kebenaran Allah", "Bersabar, mendoakan kebaikan bagi mereka, dan mencari pendekatan lain (seperti yang dicontohkan Nabi di Thaif)", "Memaksa dengan kekuatan agar mereka mau menerima ajaran Islam", "Segera meninggalkan daerah tersebut dan mengharamkan diri untuk kembali berdakwah di sana", "Membentuk pasukan khusus untuk melawan masyarakat yang menolak dakwah"], answer: 1 },
+            { no: 26, text: `Pak Usman adalah tokoh masyarakat yang dermawan. Ia tidak pandai berceramah di mimbar, namun ia secara rutin membiayai sekolah anak-anak yatim dan membangun fasilitas umum di desanya. Usaha Pak Usman ini sejatinya merupakan bentuk ....`, options: ["Tabligh akbar yang tersembunyi", "Khutbah dalam bentuk perbuatan", "Dakwah *bil Mal* dan *bil Hal* (dengan harta dan perbuatan nyata)", "Pencitraan sosial untuk meraih simpati masyarakat", "Riya' (pamer) kebaikan yang dilarang dalam agama"], answer: 2 },
+            { no: 27, text: `Ciri-ciri khutbah yang baik dan berkesan (berkualitas) bukan dinilai dari durasinya yang sangat panjang. Rasulullah SAW menganjurkan terkait durasi khutbah Jumat yang proporsional, yaitu ....`, options: ["Khutbah diperpanjang dan shalatnya diperpendek", "Khutbah dan shalat sama-sama diperpanjang agar jamaah merasa puas", "Khutbah diperpendek, isinya padat, dan shalatnya diperpanjang", "Khutbah ditiadakan jika jamaah terlihat sudah kelelahan atau mengantuk", "Durasi diserahkan sepenuhnya kepada keinginan panitia masjid setempat"], answer: 2 },
+            { no: 28, text: `Dalam menebarkan Islam secara santun, seorang khatib dalam khutbahnya harus memberikan wasiat taqwa. Wasiat taqwa ini bertujuan untuk ....`, options: ["Menambah wawasan sejarah keislaman bagi para jamaah", "Memperingatkan jamaah agar memusuhi orang di luar kelompoknya", "Mengajak jamaah untuk meningkatkan ketaatan kepada Allah dan menjauhi larangan-Nya", "Menghimbau jamaah untuk segera mengumpulkan donasi atau infak masjid", "Menilai seberapa khusyuk jamaah dalam mendengarkan ceramah khatib"], answer: 2 },
+            { no: 29, text: `Dalam menyampaikan dakwah di era modern, tantangan terberat adalah arus sekularisasi dan hedonisme di kalangan remaja. Strategi komunikasi (HOTS) yang paling relevan bagi pendakwah muda (milenial) adalah ....`, options: ["Menggunakan bahasa yang kaku dan formal agar agama terkesan sakral dan menakutkan", "Mengharamkan semua bentuk teknologi dan kebudayaan modern tanpa pandang bulu", "Mengemas pesan moral Islam menggunakan *platform* digital terkini dengan konten kreatif yang dekat dengan realitas kehidupan remaja", "Memaksa remaja untuk rutin menghadiri kajian kitab kuning yang berat setiap hari", "Berfokus pada jamaah usia tua saja karena remaja dianggap sudah mustahil untuk diperbaiki"], answer: 2 },
+            { no: 30, text: `"Agama Islam disebarkan bukan dengan ujung pedang, melainkan dengan akhlak mulia". Bukti historis dan syariat yang paling mendukung pernyataan ini dalam pelaksanaan Tabligh adalah ....`, options: ["Islam tersebar di Nusantara melalui jalur perdagangan, pernikahan, dan kesenian tanpa pertumpahan darah", "Nabi Muhammad SAW selalu menaklukkan wilayah tetangga menggunakan kekuatan militer penuh setiap kali berdakwah", "Seluruh masyarakat Arab dipaksa memeluk Islam sebelum peristiwa Fathu Makkah (Pembebasan Mekkah)", "Pendakwah Islam dilarang berinteraksi dengan pemeluk agama lain kecuali untuk berdebat", "Kewajiban tabligh hanya dibebankan kepada para penguasa atau raja, bukan rakyat biasa"], answer: 0 }
+        ];
+
+        // State Aplikasi
+        let currentRole = null;
+        let currentUserData = null; 
+        
+        // State CBT
+        let examQuestions = []; // Menyimpan soal yang sudah diacak untuk sesi ini
+        let currentQuestionIndex = 0;
+        let userAnswers = []; // Diinisialisasi saat login
+        let timerInterval = null;
+        let timeRemaining = 90 * 60; // 90 menit
+        window.localTeacherData = window.localTeacherData || []; // Fallback memori lokal
+
+        // Setup Listener Firebase Teacher Table
+        let unsubscribeTeacher = null;
+        let teacherDataRecords = [];
+
+        // Main Initialize
+        window.onload = () => {
+            // Grid tidak dirender di sini lagi, melainkan setelah soal diacak saat login
+        };
+
+        // --- AUTH & NAVIGATION ---
+        window.switchTab = (role) => {
+            document.getElementById('form-siswa').classList.toggle('hidden', role !== 'siswa');
+            document.getElementById('form-guru').classList.toggle('hidden', role !== 'guru');
+            
+            if(role === 'siswa'){
+                document.getElementById('btn-tab-siswa').className = 'flex-1 py-2 text-sm font-semibold rounded-md bg-white shadow text-blue-600';
+                document.getElementById('btn-tab-guru').className = 'flex-1 py-2 text-sm font-semibold rounded-md text-gray-500 hover:text-gray-700';
+            } else {
+                document.getElementById('btn-tab-guru').className = 'flex-1 py-2 text-sm font-semibold rounded-md bg-white shadow text-blue-600';
+                document.getElementById('btn-tab-siswa').className = 'flex-1 py-2 text-sm font-semibold rounded-md text-gray-500 hover:text-gray-700';
+            }
+            document.getElementById('login-error').classList.add('hidden');
+        };
+
+        window.loginSiswa = async () => {
+            const nama = document.getElementById('login-nama').value.trim();
+            const kelas = document.getElementById('login-kelas').value;
+            const pass = document.getElementById('login-pass-siswa').value;
+
+            if(!nama || !kelas || !pass) return showError("Harap lengkapi semua field!");
+            if(pass !== "smkda") return showError("Password siswa salah!");
+
+            currentUserData = { role: 'siswa', nama, kelas };
+            await ensureFirebaseLogin();
+            
+            // Mengacak soal untuk sesi siswa ini (Fisher-Yates Shuffle)
+            examQuestions = [...questionsData];
+            for (let i = examQuestions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [examQuestions[i], examQuestions[j]] = [examQuestions[j], examQuestions[i]];
+            }
+            // Inisialisasi tempat jawaban sesuai jumlah soal yang diacak
+            userAnswers = new Array(examQuestions.length).fill(null);
+            
+            document.getElementById('screen-login').classList.add('hidden');
+            document.getElementById('screen-exam').classList.remove('hidden');
+            document.getElementById('nav-user-info').innerText = `${nama} - ${kelas}`;
+            document.getElementById('nav-user-info').classList.remove('hidden');
+            
+            renderGrid(); // Render grid menggunakan soal yang sudah diacak
+            startTimer();
+            loadQuestion(0);
+        };
+
+        window.loginGuru = async () => {
+            const pass = document.getElementById('login-pass-guru').value;
+            if(pass !== "123456") return showError("Password guru salah!");
+
+            currentUserData = { role: 'guru' };
+            await ensureFirebaseLogin();
+
+            document.getElementById('screen-login').classList.add('hidden');
+            document.getElementById('screen-teacher').classList.remove('hidden');
+            document.getElementById('nav-user-info').innerText = "Dashboard Guru";
+            document.getElementById('nav-user-info').classList.remove('hidden');
+            
+            loadTeacherData();
+        };
+
+        window.logout = () => {
+            if(timerInterval) clearInterval(timerInterval);
+            if(unsubscribeTeacher) unsubscribeTeacher();
+            
+            document.getElementById('screen-login').classList.remove('hidden');
+            document.getElementById('screen-exam').classList.add('hidden');
+            document.getElementById('screen-result').classList.add('hidden');
+            document.getElementById('screen-teacher').classList.add('hidden');
+            document.getElementById('nav-user-info').classList.add('hidden');
+            
+            // Reset state
+            currentUserData = null;
+            examQuestions = [];
+            userAnswers = [];
+            currentQuestionIndex = 0;
+            timeRemaining = 90 * 60;
+            
+            document.getElementById('login-nama').value = '';
+            document.getElementById('login-kelas').value = '';
+            document.getElementById('login-pass-siswa').value = '';
+            document.getElementById('login-pass-guru').value = '';
+        };
+
+        function showError(msg) {
+            const el = document.getElementById('login-error');
+            el.innerText = msg;
+            el.classList.remove('hidden');
+        }
+
+        async function ensureFirebaseLogin() {
+            if(!auth) return;
+            if(!auth.currentUser) {
+                if(typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            }
+        }
+
+        // --- EXAM LOGIC ---
+        function startTimer() {
+            const timerDisplay = document.getElementById('timer-display');
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                let m = Math.floor(timeRemaining / 60);
+                let s = timeRemaining % 60;
+                timerDisplay.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                
+                if(timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    processSubmission(true); // auto submit
+                }
+            }, 1000);
+        }
+
+        window.loadQuestion = (index) => {
+            if(index < 0 || index >= examQuestions.length) return;
+            currentQuestionIndex = index;
+            
+            const q = examQuestions[index];
+            document.getElementById('q-number').innerText = index + 1; // Selalu tampil berurutan 1, 2, 3.. 
+            document.getElementById('q-text').innerHTML = q.text;
+            
+            const optsContainer = document.getElementById('q-options');
+            optsContainer.innerHTML = '';
+            
+            const labels = ['A', 'B', 'C', 'D', 'E'];
+            
+            q.options.forEach((optText, i) => {
+                const isChecked = userAnswers[index] === i;
+                const id = `opt-${i}`;
+                
+                optsContainer.innerHTML += `
+                    <div class="relative">
+                        <input class="sr-only radio-custom" type="radio" name="question-opt" id="${id}" value="${i}" ${isChecked ? 'checked' : ''} onchange="selectAnswer(${i})">
+                        <label for="${id}" class="flex p-4 cursor-pointer border rounded-xl hover:bg-gray-50 transition-colors border-gray-200">
+                            <div class="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full border-2 border-gray-300 text-gray-500 font-bold text-sm mr-4 bullet">
+                                ${isChecked ? '<span class="text-white">✓</span>' : labels[i]}
+                            </div>
+                            <div class="flex-1 text-gray-700 text-sm md:text-base align-middle flex items-center">
+                                ${optText}
+                            </div>
+                        </label>
+                    </div>
+                `;
+            });
+            
+            // Handle buttons
+            document.getElementById('btn-prev').disabled = index === 0;
+            const btnNext = document.getElementById('btn-next');
+            if(index === examQuestions.length - 1) {
+                btnNext.innerText = "Selesai";
+                btnNext.onclick = showSubmitModal;
+            } else {
+                btnNext.innerText = "Selanjutnya";
+                btnNext.onclick = nextQuestion;
+            }
+            
+            updateGridUI();
+        };
+
+        window.selectAnswer = (val) => {
+            userAnswers[currentQuestionIndex] = val;
+            updateGridUI();
+            // Re-render to show visual checkmark tick instantly
+            loadQuestion(currentQuestionIndex);
+        };
+
+        window.nextQuestion = () => { loadQuestion(currentQuestionIndex + 1); };
+        window.prevQuestion = () => { loadQuestion(currentQuestionIndex - 1); };
+        window.jumpTo = (idx) => { loadQuestion(idx); };
+
+        function renderGrid() {
+            const grid = document.getElementById('q-grid');
+            grid.innerHTML = '';
+            for(let i=0; i<examQuestions.length; i++) {
+                grid.innerHTML += `<button id="grid-btn-${i}" onclick="jumpTo(${i})" class="w-10 h-10 rounded-lg text-sm font-medium flex items-center justify-center border transition-colors border-gray-300 bg-white text-gray-600 hover:bg-gray-100">${i+1}</button>`;
+            }
+        }
+
+        function updateGridUI() {
+            for(let i=0; i<examQuestions.length; i++) {
+                const btn = document.getElementById(`grid-btn-${i}`);
+                if(!btn) continue;
+                
+                // Reset classes
+                btn.className = "w-10 h-10 rounded-lg text-sm font-medium flex items-center justify-center border transition-colors";
+                
+                if (currentQuestionIndex === i) {
+                    btn.classList.add('ring-2', 'ring-blue-500', 'ring-offset-1');
+                }
+                
+                if (userAnswers[i] !== null) {
+                    btn.classList.add('bg-blue-500', 'text-white', 'border-blue-600'); // Answered
+                } else {
+                    btn.classList.add('bg-white', 'text-gray-600', 'border-gray-300', 'hover:bg-gray-100'); // Unanswered
+                }
+            }
+        }
+
+        window.toggleNav = () => {
+            const content = document.getElementById('nav-content');
+            const icon = document.getElementById('btn-toggle-nav').firstElementChild;
+            const sidebar = document.getElementById('nav-sidebar');
+
+            if(content.classList.contains('hidden')) {
+                // Tampilkan kembali navigasi
+                content.classList.remove('hidden');
+                content.classList.add('flex');
+                icon.classList.remove('rotate-180');
+                sidebar.classList.add('md:w-72');
+                sidebar.classList.remove('md:w-48'); 
+            } else {
+                // Sembunyikan navigasi
+                content.classList.add('hidden');
+                content.classList.remove('flex');
+                icon.classList.add('rotate-180');
+                sidebar.classList.remove('md:w-72');
+                sidebar.classList.add('md:w-48'); // Menyusut agar lebih lega saat ditutup
+            }
+        };
+
+        // --- SUBMISSION ---
+        window.showSubmitModal = () => {
+            document.getElementById('custom-modal').classList.remove('hidden');
+        };
+        window.closeModal = () => {
+            document.getElementById('custom-modal').classList.add('hidden');
+        };
+
+        window.processSubmission = async (isAuto = false) => {
+            closeModal();
+            if(timerInterval) clearInterval(timerInterval);
+            
+            // Calculate Score
+            let correctCount = 0;
+            for(let i=0; i<examQuestions.length; i++){
+                if(userAnswers[i] === examQuestions[i].answer) correctCount++;
+            }
+            const wrongCount = examQuestions.length - correctCount;
+            const finalScore = Math.round((correctCount / examQuestions.length) * 100);
+            
+            // Show result Screen
+            document.getElementById('screen-exam').classList.add('hidden');
+            document.getElementById('screen-result').classList.remove('hidden');
+            
+            document.getElementById('res-nama').innerText = currentUserData.nama;
+            document.getElementById('res-kelas').innerText = currentUserData.kelas;
+            document.getElementById('res-score').innerText = finalScore;
+            
+            const recordData = {
+                nama: currentUserData.nama,
+                kelas: currentUserData.kelas,
+                score: finalScore,
+                benar: correctCount,
+                salah: wrongCount,
+                timestamp: new Date().toISOString()
+            };
+
+            // Simpan ke Fallback Memory Lokal (Berguna jika offline/Firebase delay)
+            window.localTeacherData.push(recordData);
+
+            // Save to Firebase (Real-time Cloud Database)
+            if(auth && auth.currentUser && db) {
+                try {
+                    const collRef = collection(db, 'artifacts', appId, 'public', 'data', 'cbt_scores');
+                    await addDoc(collRef, recordData);
+                } catch(e) {
+                    console.error("Error saving score:", e);
+                }
+            }
+        };
+
+        // --- TEACHER DASHBOARD ---
+        function loadTeacherData() {
+            // Gunakan fallback lokal jika Firebase belum siap
+            if(!auth || !auth.currentUser || !db) {
+                teacherDataRecords = [...window.localTeacherData];
+                teacherDataRecords.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+                renderTeacherTable();
+                return;
+            }
+            
+            document.getElementById('loading-data').classList.remove('hidden');
+            const collRef = collection(db, 'artifacts', appId, 'public', 'data', 'cbt_scores');
+            
+            // NOTE: Rule 2 strictly says no orderBy or where. We fetch all and sort in memory.
+            unsubscribeTeacher = onSnapshot(collRef, (snapshot) => {
+                teacherDataRecords = [];
+                snapshot.forEach(doc => {
+                    teacherDataRecords.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Sort in memory by timestamp descending
+                teacherDataRecords.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+                
+                // Jika Firebase kosong tapi ada data lokal (karena gagal sinkron), gabungkan
+                if(teacherDataRecords.length === 0 && window.localTeacherData.length > 0) {
+                    teacherDataRecords = [...window.localTeacherData].sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+                }
+
+                renderTeacherTable();
+            }, (error) => {
+                console.error("Error fetching data:", error);
+                // Fallback saat error
+                teacherDataRecords = [...window.localTeacherData].sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+                renderTeacherTable();
+            });
+        }
+
+        function renderTeacherTable() {
+            document.getElementById('loading-data').classList.add('hidden');
+            const tbody = document.getElementById('table-body');
+            const emptyState = document.getElementById('empty-data');
+            
+            tbody.innerHTML = '';
+            
+            if(teacherDataRecords.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            teacherDataRecords.forEach((r, i) => {
+                const timeStr = new Date(r.timestamp).toLocaleString('id-ID', {day: '2-digit', month: 'short', hour:'2-digit', minute:'2-digit'});
+                const benar = r.benar !== undefined ? r.benar : '-';
+                const salah = r.salah !== undefined ? r.salah : '-';
+                
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${i+1}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${r.nama}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${r.kelas}</td>
+                        <td class="px-4 py-4 whitespace-nowrap text-sm text-center font-bold text-green-600">${benar}</td>
+                        <td class="px-4 py-4 whitespace-nowrap text-sm text-center font-bold text-red-500">${salah}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-blue-600">${r.score}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${timeStr}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-center print:hidden">
+                            <button onclick="promptDelete('${r.id}', ${i})" class="text-red-500 hover:text-white bg-red-50 hover:bg-red-500 p-2 rounded-lg transition" title="Hapus Data Siswa">
+                                <!-- Ikon Tempat Sampah (Hapus) -->
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        let recordToDelete = null;
+
+        window.promptDelete = (id, index) => {
+            recordToDelete = { id, index };
+            document.getElementById('delete-modal').classList.remove('hidden');
+        };
+
+        window.closeDeleteModal = () => {
+            document.getElementById('delete-modal').classList.add('hidden');
+            recordToDelete = null;
+        };
+
+        window.confirmDelete = async () => {
+            if (!recordToDelete) return;
+            const { id, index } = recordToDelete;
+            const record = teacherDataRecords[index];
+
+            // Delete from firebase
+            if(auth && auth.currentUser && db && id && id !== 'undefined') {
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cbt_scores', id));
+                } catch(e) {
+                    console.error("Error deleting record:", e);
+                }
+            } 
+            
+            // Delete from local backup (fallback)
+            if(window.localTeacherData) {
+                const localIndex = window.localTeacherData.findIndex(r => r.timestamp === record.timestamp && r.nama === record.nama);
+                if (localIndex !== -1) {
+                    window.localTeacherData.splice(localIndex, 1);
+                }
+            }
+            
+            // Refresh table if offline/fallback mode
+            if (!auth || !auth.currentUser || !db) {
+                loadTeacherData();
+            }
+            
+            closeDeleteModal();
+        };
+
+        window.exportCSV = () => {
+            if(teacherDataRecords.length === 0) return;
+            
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "No,Nama,Kelas,Benar,Salah,Nilai,Waktu Selesai\n"; // Header
+            
+            teacherDataRecords.forEach((r, i) => {
+                const timeStr = new Date(r.timestamp).toLocaleString('id-ID');
+                const benar = r.benar !== undefined ? r.benar : 0;
+                const salah = r.salah !== undefined ? r.salah : 0;
+                const row = `${i+1},"${r.nama}","${r.kelas}",${benar},${salah},${r.score},"${timeStr}"`;
+                csvContent += row + "\n";
+            });
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Rekap_Nilai_CBT_PAI.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+    </script>
+</body>
+</html>
